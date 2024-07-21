@@ -12,6 +12,8 @@ export interface BrewerInterface {
      * @return True si aucun problème, False si défaillance
      */
     MakeACoffee(): boolean
+    MakeWater(): boolean
+    ajouteSupplement(supplement: SupplementType): boolean
 
     /**
      * Tire une dose d'eau depuis le réservoir vers le bouilleur
@@ -66,7 +68,23 @@ export interface ButtonPanelInterface {
 export enum ButtonCodes {
     BTN_LUNGO = 0,
     BTN_SUGAR = 1,
-    BTN_MILK = 2
+    BTN_MILK = 2,
+    BTN_CHOCOLATE = 3,
+    BTN_WATER = 4,
+    BTN_CAPUCHINO = 5,
+}
+
+export enum SupplementType {
+    LUNGO = 0,
+    SUGAR = 1,
+    MILK = 2,
+    CHOCOLATE = 3,
+    CAPUCHINO = 5
+}
+
+export enum BoissonType {
+    CAFFE = 0,
+    WATER = 1,
 }
 
 export interface ChangeMachineInterface {

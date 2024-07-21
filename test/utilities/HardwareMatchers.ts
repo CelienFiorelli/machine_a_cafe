@@ -1,17 +1,30 @@
-import {HardwareFake} from "./HardwareFake";
 import {expect} from '@jest/globals';
 import type {MatcherFunction} from 'expect';
+import {MachineACaféHarness} from "./MachineACaféHarness";
 
 const aucunCaféNEstServi: MatcherFunction =
     function (actual: unknown) {
-        if(!(actual instanceof HardwareFake))
+        if(!(actual instanceof MachineACaféHarness))
             throw new Error("Only works with MachineACaféHarness");
 
         const delta = actual.CountInvocationsMakeACoffee();
         const pass = delta == 0;
-        const message = pass
-            ? `Au moins un café devait être servi, aucun ne l'a été.`
-            : `Aucun café ne devait être servi, ${delta} ont été servis.`;
+        const message = `${delta} cafés servis.`
+
+        return {
+            message: () => message,
+            pass: pass
+        }
+    };
+
+const aucunVerreDEauNEstServi: MatcherFunction =
+    function (actual: unknown) {
+        if(!(actual instanceof MachineACaféHarness))
+            throw new Error("Only works with MachineACaféHarness");
+
+        const delta = actual.CountInvocationsMakeWater();
+        const pass = delta == 0;
+        const message = `${delta} verre d'eau servis.`
 
         return {
             message: () => message,
@@ -21,14 +34,27 @@ const aucunCaféNEstServi: MatcherFunction =
 
 const unCaféEstServi: MatcherFunction =
     function (actual: unknown) {
-        if(!(actual instanceof HardwareFake))
+        if(!(actual instanceof MachineACaféHarness))
             throw new Error("Only works with MachineACaféHarness");
 
         const delta = actual.CountInvocationsMakeACoffee();
         const pass = delta == 1;
-        const message = pass
-            ? `Un café devait être servi, ${delta} ne l'a été.`
-            : `Zéro ou plusieurs cafés devaient être servis, Un a été servi.`;
+        const message = `${delta} cafés servis.`
+
+        return {
+            message: () => message,
+            pass: pass
+        }
+    };
+
+const unVerreDEauEstServi: MatcherFunction =
+    function (actual: unknown) {
+        if(!(actual instanceof MachineACaféHarness))
+            throw new Error("Only works with MachineACaféHarness");
+
+        const delta = actual.CountInvocationsMakeWater();
+        const pass = delta == 1;
+        const message = `${delta} verre d'eau servis.`
 
         return {
             message: () => message,
@@ -38,17 +64,51 @@ const unCaféEstServi: MatcherFunction =
 
 const xCafésSontServis: MatcherFunction<[expected: unknown]> =
     function (actual: unknown, expected: unknown) {
-        if(!(actual instanceof HardwareFake))
-            throw new Error("Only works with HardwareFake");
+        if(!(actual instanceof MachineACaféHarness))
+            throw new Error("Only works with MachineACaféHarness");
 
         if(!Number.isInteger(expected))
             throw new Error("Only works with integer");
 
         const delta = actual.CountInvocationsMakeACoffee();
         const pass = delta == expected;
-        const message = pass
-            ? `${expected} cafés devaient être servis, ${delta} l'a été.`
-            : `Il était demandé de ne pas service ${expected}, ce fut le cas.`;
+        const message = `${delta} cafés servis.`
+
+        return {
+            message: () => message,
+            pass: pass
+        }
+    };
+
+const xCafésLattéSontServis: MatcherFunction<[expected: unknown]> =
+    function (actual: unknown, expected: unknown) {
+        if(!(actual instanceof MachineACaféHarness))
+            throw new Error("Only works with MachineACaféHarness");
+
+        if(!Number.isInteger(expected))
+            throw new Error("Only works with integer");
+
+        const delta = actual.CountInvocationsPourMilk();
+        const pass = delta == expected;
+        const message = `${delta} cafés latté servis.`
+
+        return {
+            message: () => message,
+            pass: pass
+        }
+    };
+
+const xCafésSucréeSontServis: MatcherFunction<[expected: unknown]> =
+    function (actual: unknown, expected: unknown) {
+        if(!(actual instanceof MachineACaféHarness))
+            throw new Error("Only works with MachineACaféHarness");
+
+        if(!Number.isInteger(expected))
+            throw new Error("Only works with integer");
+
+        const delta = actual.CountInvocationsPourMilk();
+        const pass = delta == expected;
+        const message = `${delta} cafés latté servis.`
 
         return {
             message: () => message,
@@ -59,5 +119,9 @@ const xCafésSontServis: MatcherFunction<[expected: unknown]> =
 expect.extend({
     aucunCaféNEstServi,
     xCafésSontServis,
-    unCaféEstServi
+    unCaféEstServi,
+    xCafésLattéSontServis,
+    xCafésSucréeSontServis,
+    unVerreDEauEstServi,
+    aucunVerreDEauNEstServi
 });

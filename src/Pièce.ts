@@ -17,8 +17,8 @@ export class Pièce {
         this._montant = montant;
     }
 
-    EstInférieureA(comparée: Pièce) {
-        return this._montant < comparée._montant;
+    EstInférieureA(comparée: Array<Pièce>) {
+        return this._montant < comparée.reduce((acc, cur) => acc + cur._montant, 0);
     }
 
     public toString(){
