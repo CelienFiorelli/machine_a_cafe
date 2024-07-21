@@ -5,7 +5,7 @@ import {HardwareFake} from "./utilities/HardwareFake";
 import "./utilities/HardwareMatchers"
 import { MachineACaféBuilder } from "./utilities/MachineACaféBuilder";
 
-describe("MVP café latté", () => {
+describe("MVP café avec supplément", () => {
     test("Cas pas de type de café sélectionné", () => {
         // ETANT DONNE une machine a café ET une pièce inséré
         let machineACafé = MachineACaféBuilder.ParDéfaut()
@@ -18,7 +18,7 @@ describe("MVP café latté", () => {
         expect(machineACafé.argentEncaisséEnCentimes).toEqual(pièce.getMontant());
     })
 
-    test("Cas assez d'argent", () => {
+    test("Cas assez d'argent pour caffé latté", () => {
         // ETANT DONNE une machine a café
         let machineACafé = MachineACaféBuilder.ParDéfaut()
         
@@ -28,6 +28,18 @@ describe("MVP café latté", () => {
         
         // ALORS le café latté est servis ET l'argent est encaissé
         expect(machineACafé).xCafésLattéSontServis(1);
+    })
+
+    test("Cas assez d'argent pour caffé au chocolat", () => {
+        // ETANT DONNE une machine a café
+        let machineACafé = MachineACaféBuilder.ParDéfaut()
+        
+        // QUAND on choisis un café latté ET une pièce d'une valeur de 60cts
+        machineACafé.SimulerBoutonPressé(ButtonCodes.BTN_CHOCOLATE)
+        machineACafé.SimulerInsertionPièce(Pièce.UnEuro)
+        
+        // ALORS le café latté est servis ET l'argent est encaissé
+        expect(machineACafé).xCafésChocolatSontServis(1);
     })
     
     test("Cas pas assez d'argent", () => {

@@ -98,6 +98,24 @@ const xCafésLattéSontServis: MatcherFunction<[expected: unknown]> =
         }
     };
 
+const xCafésChocolatSontServis: MatcherFunction<[expected: unknown]> =
+    function (actual: unknown, expected: unknown) {
+        if(!(actual instanceof MachineACaféHarness))
+            throw new Error("Only works with MachineACaféHarness");
+
+        if(!Number.isInteger(expected))
+            throw new Error("Only works with integer");
+
+        const delta = actual.CountInvocationsPourChocolate();
+        const pass = delta == expected;
+        const message = `${delta} cafés au chocolat servis.`
+
+        return {
+            message: () => message,
+            pass: pass
+        }
+    };
+
 const xCafésSucréeSontServis: MatcherFunction<[expected: unknown]> =
     function (actual: unknown, expected: unknown) {
         if(!(actual instanceof MachineACaféHarness))
@@ -123,5 +141,6 @@ expect.extend({
     xCafésLattéSontServis,
     xCafésSucréeSontServis,
     unVerreDEauEstServi,
-    aucunVerreDEauNEstServi
+    aucunVerreDEauNEstServi,
+    xCafésChocolatSontServis
 });

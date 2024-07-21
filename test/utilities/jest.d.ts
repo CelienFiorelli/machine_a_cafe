@@ -6,6 +6,7 @@ declare global {
             unCaféEstServi(): R
             unVerreDEauEstServi(): R
             aucunVerreDEauNEstServi(): R
+            xCafésChocolatSontServis(expected: number): R
             xCafésLattéSontServis(expected: number): R
             xCafésSucréeSontServis(expected: number): R
         }

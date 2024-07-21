@@ -24,6 +24,10 @@ export class HardwareFake implements HardwareInterface {
     PourWater(): boolean {
         throw new Error("Method not implemented.");
     }
+    PourChocolate(): boolean {
+        this._invocationsPourChocolate ++;
+        return true;
+    }
     PourSugar(): boolean {
         this._invocationsPourSugar ++;
         return true;
@@ -34,6 +38,7 @@ export class HardwareFake implements HardwareInterface {
     private _invocationsMakeWater: number = 0;
     private _invocationsMakeACoffee: number = 0;
     private _invocationsPourMilk: number = 0;
+    private _invocationsPourChocolate: number = 0;
     private _invocationsPourSugar: number = 0;
 
     MakeACoffee(): boolean {
@@ -53,6 +58,9 @@ export class HardwareFake implements HardwareInterface {
                 break;
             case SupplementType.SUGAR:
                 this.PourSugar()
+                break;
+            case SupplementType.CHOCOLATE:
+                this.PourChocolate()
                 break;
             case SupplementType.CAPUCHINO:
                 this.PourMilk()
@@ -86,6 +94,10 @@ export class HardwareFake implements HardwareInterface {
   
     public CountInvocationsPourSugar() {
         return this._invocationsPourSugar;
+    }
+  
+    public CountInvocationsPourChocolate() {
+        return this._invocationsPourChocolate;
     }
 
     public CountInvocationsPourMilk() {

@@ -31,6 +31,10 @@ export class MachineACaféHarness extends MachineACafé {
         return this.hardware.CountInvocationsPourMilk();
     }
 
+    public CountInvocationsPourChocolate() {
+        return this.hardware.CountInvocationsPourChocolate();
+    }
+
     public CountInvocationsMakeWater() {
         return this.hardware.CountInvocationsMakeWater();
     }
